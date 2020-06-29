@@ -1,0 +1,265 @@
+1. ? field(hit_transfer,engineering).
+		ground query
+
+		matches clause field(X, Y) :- course(X, Z), field(Z, Y).
+		unifies X to hit_transfer and Y to engineering
+		resolves course(hit_transfer, Z) and field(Z, engineering).
+		course(hit_transfer, Z) matches clause course(hit_transfer, mechanical).
+		Z unifies to mechanical and resolves field(mechanical, engineering).
+		field(mechanical, engineering). matches clause field(mechanical,engineering).
+	--->	true ;
+		backtrack to course(hit_transfer, Z)
+		no more matches and backtrack to field(hit_transfer,engineering).
+		no more matches
+	--->	false
+
+2. ? lab_number(fine_arts,X).
+		non-ground query
+
+		lab_number(fine_arts,X) matches lab_number(fine_arts,10).
+		unifies X to 10
+	--->	X = 10;
+		backtrack to lab_number(fine_arts,X)
+		no more matches
+	--->	false
+
+3. ? field(computer, literature).
+		ground query
+
+		field(computer, literature) matches with field(X, Y) :- course(X, Z), field(Z, Y).
+		X unifies to computer and Y to literature
+		resolve to course(computer, Z) and field(Z literature)
+		no matches for course(computer, Z) and field(Z literature)
+	--->	false
+
+4. ? course(X,Y).
+		non-ground query
+
+		course(X,Y) matches course(hit_transfer, mechanical)
+		course(X,Y) unifies X with hit_transfer and Y with mechanical
+	--->	X = hit_transfer,
+			Y = mechanical ;
+		backtrack to course(X,Y)
+		course(X,Y) unifies X with web_design and Y with computer
+	--->	X = web_design,
+			Y = computer ;
+		backtrack to course(X,Y)
+		course(X,Y) unifies X with design_methods and Y with fine-arts
+	--->	X = design_methods,
+			Y = fine-arts ;
+		backtrack to course(X,Y)
+		course(X,Y) unifies X with poetry and Y with literature
+	--->	X = poetry,
+			Y = literature ;
+		backtrack to course(X,Y)
+		course(X,Y) unifies X with leadership and Y with management
+	--->	X = leadership,
+			Y = management ;
+		backtrack to course(X,Y)
+		course(X,Y) unifies X with biology and Y with medicin
+	--->	X = biology,
+			Y = medicin ;
+		no more matches
+	--->	false
+
+5. ? student(adrian).
+		ground query
+
+		student(adrian) matches with student(X):- student(X,_).
+		unify X to adrian
+		resolve to student(adrian, _)
+		match with student(adrian, web_design).
+	--->	true ; 
+		backtrack to student(adrian, _)
+		match with student(X, Y) :- field(Z, Y), student(X, Z).
+		unify X to adrian and Y to _
+		resolve to field(Z, _), student(adrian, Z).
+		match with field(X, Y) :- course(X, Z), field(Z, Y).
+		resolves X to Z and Y to _
+		resolve to course(Z, Z1) and field (Z1, _)
+		match with course(web_design,computer) and field(computer, engineering).
+		unify X web_design and Y to computer
+		resolve to field(web_design, computer) and student (adrian, web_design)
+	--->	true ;
+		no more matches
+	--->	false
+
+
+6. ? student(anna, engineering).
+		ground query
+
+		match with student(X, Y) :- field(Z, Y), student(X, Z).
+		unify X to anna and Y to engineering
+		resolve to field(Z, engineering) and student(anna, Z).
+
+		match with field(X, Y) :- course(X, Z), field(Z, Y).
+
+		unify X to Z and Y to engineering
+		resolve to course(Z, Z1) and field(Z1, engineering)
+
+		match with course(hit_transfer, mechanical) and field(mechanical,engineering)
+		unify Z to hit_transfer
+		resolve to field(hit_transfer, engineering) and student(anna, hit_transfer).
+		match with student(anna, hit_transfer);
+	--->	true ;
+		no more matches
+	--->	false
+
+
+7. ? student(X, engineering).
+		non-ground query
+
+		match with student(X, Y) :- field(Z, Y), student(X, Z).
+		unify X to X and Y to engineering
+		resolve to field(Z, engineering) and student(X, Z).
+		field(X, Y) :- course(X, Z), field(Z, Y).
+		unify X to Z and Y to engineering
+		resolve to course(Z, Z1) and field(Z1, engineering)
+		match with course(hit_transfer, mechanical) and field(mechanical,engineering)
+		unify Z to hit_transfer
+		resolve to field(hit_transfer, engineering) and student(X, hit_transfer).
+		match with student(anna, hit_transfer).
+		unify X to anna
+	--->	X = anna ;
+		backtrack to field(hit_transfer, engineering) and student(X, hit_transfer).
+		match with student(daniel, hit_transfer).
+		unify X to daniel
+	--->	X = daniel ;
+		backtrack to course(Z, Z1) and field(Z1, engineering)
+		match with course(web_design, computer) and field(computer,engineering)
+		unify Z to web_design and Z1 to computer
+		resolve field(web_design, engineering) and student(X, web_design).
+		match with student(adrian, web_design).
+		unify X to daniel
+	--->	X = adrian ;
+		no more matches
+	--->	false
+
+8. ? student(X,fine-arts), course(fine_arts, Y).
+		non-ground query
+
+		student(X,fine-arts) matches with student(X, Y) :- field(Z, Y), student(X, Z).
+		unify Y to fine-arts
+		resolve to field(Z, fine-arts), student(X, Z).
+		no matches
+	--->	false
+
+9. ? field(_,X).
+		non-ground query
+
+		field(_,X) matches with field(mechanical,engineering).
+		unify X to engineering
+	--->	X = engineering ;
+
+		field(_,X) matches with field(computer, engineering).
+		unify X to engineering
+	--->	X = engineering ;
+
+		field(_,X) matches with field(fine-arts, art).
+		unify X to art
+	--->	X = art ;
+
+		field(_,X) matches with field(literature, social).
+		unify X to social
+	--->	X = social ;
+
+		field(_,X) matches with field(management, buisiness).
+		unify X to buisiness
+	--->	X = buisiness ;
+
+		field(_,X) matches with field(X, Y) :- course(X, Z), field(Z, Y).
+		unify Y to X
+		resove to course(X1, Z), field(Z, X).
+		match with course(hit_transfer, mechanical) and field(mechanical,engineering).
+		unify X to engineering
+	--->	X = engineering ;
+
+		match with course(web_design,computer) and field(computer,engineering).
+		unify X to engineering
+	--->	X = engineering ;
+
+		match with course(design_methods, fine-arts) and field(fine-arts, art).
+		unify X to art
+	--->	X = art ;
+
+		match with course(poetry, literature) and field(literature, social).
+		unify X to social
+	--->	X = social ;
+
+		match with course(leadership, management) and field(management, buisiness).
+		unify X to buisiness
+	--->	X = buisiness ;
+		no more matches
+	--->	false
+
+10. ? lab_number(_,X), field(X,Y).
+		non-ground query
+
+		lab_number(_,X) matches with lab_number(mechanical,15).
+		unify X to 15
+		resolve to field(15,Y).
+		no matches and backtrack to lab_number(_,X)
+		lab_number(_,X) matches with lab_number(fine_arts,10).
+		unify X to 10
+		resolve to field(10,Y).
+		no matches and backtrack to lab_number(_,X)
+		lab_number(_,X) matches with lab_number(X, Z) :- course(X, Y), lab_number(Y, Z).
+		no matches
+	--->	false
+
+11. ? lab_number(X,15), field(X,Y).
+		non-ground query
+
+		lab_number(X,15) matches with lab_number(mechanical,15).
+		unify X to mechanical
+		resolve to field(mechanical,Y)
+		match with field(mechanical,engineering).
+		unify Y to engineering
+		resolve to field(mechanical,engineering).
+		match with field(mechanical,engineering).
+	--->	X = mechanical
+			Y = engineering ; 
+
+		backtrack to lab_number(X,15)
+		match with lab_number(X, Z) :- course(X, Y), lab_number(Y, Z).
+		unify Z to 15
+		resolve to course(X, Y) and lab_number (Y, 15)
+		match with course(hit_transfer, mechanical) and lab_number(mechanical,15).
+		unify X to hit_transfer and Y to mechanical
+	--->	X = hit_transfer
+			Y = engineering ;
+		no more matches
+	--->	false
+
+12. ? student(X), !, student(X,_). 
+		non-ground query
+		
+		X unifies with anna then cut operator executes
+		student(X,_) matches student(anna, hit_transfer).
+	--->	X = anna ;
+		backtrack to student(X,_) and match student(X, Y) :- field(Z, Y), student(X, Z).
+		student(X, Y) :- field(Z, Y), student(X, Z). succeeds
+	--->	X = anna ;
+		backtrack to cut operator 
+	--->	false
+
+13. ? student(X), student(X,_), !.
+		non-ground query
+
+		X unifies with anna
+		student(X,_) matches student(anna, hit_transfer).
+		backtrack to student(X,_) and match student(X, Y) :- field(Z, Y), student(X, Z).
+		student(X, Y) :- field(Z, Y), student(X, Z). succeeds
+	--->	X = anna ;
+		backtrack to cut operator 
+	--->	false
+		
+14. ? course(X,_), \+ student(_,X). 
+		non-ground query
+
+		course(X,_), \+ student(_,X) matches with course(biology,medicin) and no student(_,X)
+		X unifies to biology
+	--->	X = Biology ;
+		no more matches
+	--->	false
+		

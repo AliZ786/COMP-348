@@ -1,0 +1,50 @@
+?- magic(Hermione)
+	magic(Hermione) matches with clause magic(X):- house_elf(X).
+	magic(X) unifies X with Hermione and resolves to house_elf(Hermione)
+	house_elf(Hermione) unifies Hermione with dobby and resolves to house_elf(dobby)
+	Hermione = dobby ;
+	backtrack to house_elf(Hermione)
+	no more clauses with house_elf/1 therefore backtrack to magic(Hermione)
+
+	magic(Hermione) matches with clause magic(X):- wizard(X).
+	magic(X) unifies X with Hermione and resolves to wizard(Hermione)
+	wizard(Hermione) unifies Hermione with dobby and resolves to wizard(dobby)
+	Hermione = dobby ;
+	backtrack to wizard(Hermione)
+	no more clauses with wizard/1 therefore backtrack to magic(Hermione)
+
+	magic(Hermione) matches with clause magic(X):- witch(X).
+	magic(X) unifies X with Hermione and resolves to witch(Hermione)
+	witch(Hermione) unifies Hermione with hermione and resolves to witch(hermione)
+	Hermione = hermione ;
+	backtrack to witch(Hermione)
+
+	wizard(Hermione) unifies Hermione with mcGonagall and resolves to wizard(mcGonagall)
+	Hermione = mcGonagall;
+	backtrack to witch(Hermione)
+
+	wizard(Hermione) unifies Hermione with rita_skeeter and resolves to wizard(rita_skeeter)
+	Hermione = rita_skeeter;
+	backtrack to witch(Hermione)
+	no more clauses with wizard/1 therefore backtrack to magic(Hermione)
+	no more clauses with magic/1 
+	end query
+
+?- magic(hermione)
+	magic(hermione) matches with clause magic(X):- house_elf(X).
+	magic(X) unifies X with hermione and resolves to house_elf(hermione)
+	false 
+	backtrack to magic(X)
+
+	magic(hermione) matches with clause magic(X):- wizard(X).
+	magic(X) unifies X with hermione and resolves to wizard(hermione)
+	wizard(hermione) returns 
+	false
+	backtrack to magic(X)
+
+	magic(hermione) matches with clause magic(X):- witch(X).
+	magic(X) unifies X with hermione and resolves to witch(hermione)
+	true
+	backtrack to magic(X)
+	backtrack to magic(hermione)
+	end query

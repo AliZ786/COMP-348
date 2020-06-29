@@ -1,0 +1,129 @@
+1. food(bread, X) = Food(Y, soup)
+
+The procedure's name are not of the same case, hence these will not unify. 
+To fix these, food should have been the same case, which will lead to X = soup, and Y = bread.
+
+
+2. Bread = soup
+
+This will unify since that is basically what the statement is telling us to because of the =.
+
+Bread = soup
+
+3. Bread = Soup
+
+This will unify since that is basically what the statement is telling us to because of the =.
+
+Bread = Soup
+
+4. food(bread, X, milk) = food(Y, salad, X)
+
+This will not unify. Because X cannot be unified twice to different variables.
+Initially Y = bread, X = salad, X = milk. X would have two things it is instantiated to hence these will not unify.
+Changing the second X to Z would fix this problem.
+
+
+
+5. manager(X) = Y
+
+This will unify since that is basically what the statement is telling us to because of the =.
+
+manager(X) = Y
+
+
+6. meal(healthyFood(bread), drink(milk)) = meal(X,Y)
+
+These will unify since each variable has one term that it's substantiated to.
+
+healthyFood(bread) = X
+drink(milk) = Y
+
+7. meal(eat(Z), drink(milk)) = [X]
+
+This will not unify since drink(milk) does not have a variable which will instantitate it.
+To fix that , we can change the RHS to [x,Y].
+
+8. [eat(Z), drink(milk)] = [X, Y | Z]
+
+This will unify since each variable has one term that it's substantiated to.
+
+eat(Z) = X
+drink(milk) = Y
+Z =[] (an empty list).
+
+9. f(X, t(b, c)) = f(l, t(Z, c))
+
+This will unify since each variable has one term that it's substantiated to.
+
+X= 1
+b = Z
+c = c
+
+10. ancestor(french(jean), B) = ancestor(A, scottish(joe))
+
+This will unify since each variable has one term that it's substantiated to.
+
+french(jean) = A 
+B = scottish(joe)
+
+11. meal(healthyFood(bread), Y) = meal(X, drink(water))
+
+This will unify since each variable has one term that it's substantiated to.
+
+healthyFiid(bread) = X 
+Y = drink(water)
+
+12. [H|T] = [a, b, c]
+
+This will unify since there is a distinct head variable, and the tail always instantiates if the head does.
+
+H = a 
+T = [b,c]
+
+13. [H, T] = [a, b, c]
+
+This will not unify because c has nothing it can instantiate to. 
+To fix this, it would be better to change the list to the same as 12. 
+
+14. breakfast(healthyFood(bread), egg, milk) = breakfast(healthyFood(Y), Y, Z)
+
+This will not unify since we have two variables Y on the RHS. It will two atoms healthyFood(bread) and egg to Y which is illegal.
+To fix this, one of the Y can be changed to an X.
+
+15. dinner(X, Y, Time) = dinner(jack, cook( egg, oil), Evening)
+
+
+This will unify since each variable has one term that it's substantiated to.
+
+X = Jack
+Y = cook(egg, oil)
+Time = Evening
+
+16. k(s(g), Y) = k(X, t(k))
+
+This will unify because each variable has one term that it's subtantiated to.
+
+s(g) = X
+Y = t(k)
+
+17. equation(Z, f(x, 17, M), L*M, 17) = equation(C, f(D, D, y), C, E)
+
+This will not unify because variable D is instatiated to two different terms which are x and 17.
+To fix this one of the D's can be changed to a E.
+
+18. a(X, b(c, d), [H|T]) = a(X, b(c, X), b)
+
+This will unify since each variable has one term that it's substantiated to
+
+X = d
+c = c
+H = b
+T = []
+
+
+
+
+
+
+ 
+ 
