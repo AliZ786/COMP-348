@@ -1,0 +1,12 @@
+(defun reverse-cut-in-half (lst)
+    (let ((n 0) (x lst) (y `()))
+    (loop
+        (when (>= n (list-length lst)) (return))
+        (setf y (append y (list (car x))))
+        (setf x (cdr x))
+        (incf n)
+        (incf n)
+        )
+    (write (list x y))(terpri)
+    )
+)
